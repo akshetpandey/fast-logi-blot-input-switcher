@@ -1,2 +1,2 @@
 # fast-logi-blot-input-switcher
-Quickly switch logi bolt accessories between paired devices
+Quickly switch logitech devices between paired devices
