@@ -1,7 +1,10 @@
 #include <fstream>
 
+#if !defined(_WIN32)
 #include "absl/debugging/failure_signal_handler.h"
 #include "absl/debugging/symbolize.h"
+#endif
+
 #include "absl/log/globals.h"
 #include "absl/log/initialize.h"
 #include "absl/log/log.h"
@@ -15,9 +18,11 @@
 #include "utils.h"
 
 int main(int argc, char* argv[]) {
+#if !defined(_WIN32)
     absl::InitializeSymbolizer(argv[0]);
     absl::FailureSignalHandlerOptions handlerOptions;
     absl::InstallFailureSignalHandler(handlerOptions);
+#endif
 
     absl::SetMinLogLevel(absl::LogSeverityAtLeast::kInfo);
     absl::SetStderrThreshold(absl::LogSeverityAtLeast::kInfo);

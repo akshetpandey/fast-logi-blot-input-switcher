@@ -28,19 +28,19 @@ ftxui = subproject('ftxui', default_options: ['cpp_std=c++20', 'default_library=
 dependencies = [
     hidapi.get_variable('hidapi_dep'),
     fmt.get_variable('fmt_dep'),
-    absl.get_variable('absl_debugging_dep'),
     absl.get_variable('absl_base_dep'),
     absl.get_variable('absl_crc_dep'),
     absl.get_variable('absl_strings_dep'),
-    absl.get_variable('absl_synchronization_dep'),
     absl.get_variable('absl_status_dep'),
     absl.get_variable('absl_log_dep'),
     cxxopts.get_variable('cxxopts_dep'),
     nlohmann_json.get_variable('nlohmann_json_dep'),
-    ftxui.get_variable('screen_dep'),
-    ftxui.get_variable('dom_dep'),
     ftxui.get_variable('component_dep'),
 ]
+
+if host_machine.system() != 'windows'
+    dependencies += [absl.get_variable('absl_debugging_dep')]
+endif
 
 sources = [
     'src/device_config.cc',

@@ -22,24 +22,27 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SavedSwitchConfig, receiver, receiverPathHint
 static const std::string configFileName = "device_config.json";
 
 std::filesystem::path getPlatformSpecificConfigPath() {
-#if TARGET_OS_LINUX
+#if defined(__linux__)
     auto home = std::getenv("HOME");
     if (home == nullptr) {
         return configFileName;
     }
     return std::filesystem::path(home) / ".config" / "logitech-switcher" / configFileName;
-#elif TARGET_OS_MAC
+#elif defined(__MACH__)
     auto home = std::getenv("HOME");
     if (home == nullptr) {
         return configFileName;
     }
     return std::filesystem::path(home) / "Library" / "Preferences" / "logitech-switcher" / configFileName;
-#elif TARGET_OS_WINDOWS
+#elif defined(_WIN32)
     auto home = std::getenv("APPDATA");
     if (home == nullptr) {
         return configFileName;
     }
     return std::filesystem::path(home) / "logitech-switcher" / configFileName;
+#else
+    LOG(FATAL) << "unsupported platform";
+    return "";
 #endif
 }
 
